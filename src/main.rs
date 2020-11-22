@@ -28,7 +28,7 @@ mod schema;
 mod errors;
 mod utils;
 
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct AppData {
     conn_pool: database::Pool
 }
