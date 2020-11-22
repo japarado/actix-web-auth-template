@@ -1,7 +1,8 @@
 table! {
     profiles (id) {
         id -> Int4,
-        username -> Varchar,
+        first_name -> Varchar,
+        last_name -> Varchar,
         bio -> Nullable<Text>,
         profile_picture -> Nullable<Varchar>,
         user_id -> Int4,
@@ -18,4 +19,7 @@ table! {
 
 joinable!(profiles -> users (user_id));
 
-allow_tables_to_appear_in_same_query!(profiles, users,);
+allow_tables_to_appear_in_same_query!(
+    profiles,
+    users,
+);
