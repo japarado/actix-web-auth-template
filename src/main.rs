@@ -10,18 +10,42 @@ use dotenv::dotenv;
 use listenfd::ListenFd;
 use std::env;
 
+// HTTP
 mod controllers;
 mod middleware;
-mod models;
 mod routes;
+
+// Layers
+mod services;
+mod repositories;
+
+// Database
+mod database;
+mod models;
 mod schema;
+
+// Misc
+mod errors;
+mod utils;
+
+#[derive(Debug, Clone)]
+pub struct AppData {
+    conn_pool: database::Pool
+}
+
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     dotenv().ok();
+
+    let app_data = AppData {
+        conn_pool: database::create_pool()
+    };
+
     let mut listenfd = ListenFd::from_env();
     let mut server = HttpServer::new(move || {
         App::new()
+            .data(app_data.clone())
             .service(index)
             .default_service(web::route().to(fallback))
             .configure(routes::config)

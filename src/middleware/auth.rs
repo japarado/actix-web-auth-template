@@ -48,11 +48,9 @@ where
                 println!("Auth token: {:?}", bearer_token);
                 Either::Left(self.service.call(req))
             }
-            None => {
-                Either::Right(ok(
-                        req.into_response(HttpResponse::Unauthorized().finish().into_body())
-                ))
-            }
+            None => Either::Right(ok(
+                req.into_response(HttpResponse::Unauthorized().finish().into_body())
+            )),
         }
     }
 }
