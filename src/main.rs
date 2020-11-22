@@ -11,6 +11,7 @@ use listenfd::ListenFd;
 use std::env;
 
 mod controllers;
+mod database;
 mod middleware;
 mod models;
 mod routes;
